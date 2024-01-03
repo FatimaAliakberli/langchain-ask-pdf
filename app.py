@@ -17,12 +17,21 @@ def main():
     # upload file
     pdf = st.file_uploader("Upload your PDF", type="pdf")
     
+    
     # extract the text
     if pdf is not None:
       pdf_reader = PdfReader(pdf)
       text = ""
       for page in pdf_reader.pages:
         text += page.extract_text()
+
+    with st.form("user_input"):
+        OPENAI_API_KEY = st.text_input("Enter your OpenAI API Key:", placeholder="sk-XXXX", type='password')
+    if submitted: 
+        elif not OPENAI_API_KEY:
+            st.info("Please fill out the OpenAI API Key to proceed. If you don't have one, you can obtain it [here](https://platform.openai.com/account/api-keys).")
+            st.stop()
+
         
       # split into chunks
       text_splitter = CharacterTextSplitter(
